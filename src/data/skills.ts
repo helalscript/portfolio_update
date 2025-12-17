@@ -29,5 +29,17 @@ export const skillCategories: SkillCategory[] = [
             { name: "Docker", icon: "🐳", description: "Containerization" },
             { name: "Git", icon: "📦", description: "Version Control" }
         ]
+    },
+    {
+        title: "DevOps & Cloud",
+        skills: [
+            { name: "AWS", icon: "☁️", description: "EC2, S3, RDS, Deployment" },
+            { name: "Azure", icon: "🔷", description: "Cloud Services & Hosting" },
+            { name: "Hostinger VPS", icon: "🖥️", description: "VPS Setup & Management" },
+            { name: "SiteGround", icon: "🌐", description: "Server & Hosting Management" },
+            { name: "Docker", icon: "🐳", description: "Containerization" },
+            { name: "CI/CD", icon: "🔄", description: "Automated Deployment" },
+            { name: "Linux Server", icon: "🐧", description: "Server Administration" }
+        ]
     }
 ]
