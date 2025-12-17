@@ -27,7 +27,7 @@ export function Hero({ onNavigate }: HeroProps) {
                     <div className="lg:col-span-2 space-y-6">
                         <div className="animate-fade-up delay-100 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card text-card-foreground">
                             <Code2 className="w-4 h-4" />
-                            <span className="text-sm font-medium">Backend Developer</span>
+                            <span className="text-sm font-medium">Full Stack Developer</span>
                         </div>
 
                         <h1 className="animate-fade-up delay-200 text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight">

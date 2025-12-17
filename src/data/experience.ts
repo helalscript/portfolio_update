@@ -1,6 +1,7 @@
 export interface ExperienceItem {
     role: string
     company: string
+    companyLink: string
     period: string
     description: string
 }
@@ -21,30 +22,39 @@ export interface CertificationItem {
 export const experiences: ExperienceItem[] = [
     {
         role: 'Full Stack Engineer',
-        company: 'Tech Solutions Inc.',
-        period: '2023 - Present',
-        description: 'Leading development of scalable web applications using Laravel and React ecosystem.'
+        company: 'Softvence Agency',
+        companyLink: 'https://softvenceagency.com',
+        period: '2024 - Present',
+        description: 'Leading development of scalable web applications using Laravel and React ecosystem. Handled production deployments and server management. Worked on multiple projects including e-commerce, education, and healthcare applications.'
     },
     {
         role: 'Backend Developer',
-        company: 'Digital Systems',
-        period: '2021 - 2023',
-        description: 'Architected RESTful APIs and microservices for high-traffic platforms.'
+        company: 'Prantik Soft',
+        companyLink: 'https://prantiksoft.com/',
+        period: '2023 - 2024',
+        description: 'Architected RESTful APIs and microservices for high-traffic platforms. Developed real-time features using Pusher and Firebase.'
     },
-    {
-        role: 'Web Developer',
-        company: 'Creative Agency',
-        period: '2020 - 2021',
-        description: 'Built communicative websites and e-commerce solutions for various clients.'
-    }
 ]
 
 export const education: EducationItem[] = [
+
     {
-        degree: "B.Sc. in Computer Science",
-        school: "National University",
-        period: "2018 - 2022",
-        description: "Focus on Software Engineering and Database Systems."
+        degree: "Web Application Development (Laravel, Vue.js, React.js, WordPress)",
+        school: "IsDB-BISEW IT Scholarship Program",
+        period: "2022 - 2023", // Assuming a typical program duration
+        description: "Comprehensive training in modern web application development frameworks and tools. Focus on Software Engineering and Database Systems."
+    },
+    {
+        degree: "Master of Arts (Bangla)",
+        school: "University of Dhaka",
+        period: "2020-2021", // Assuming completion year
+        description: ""
+    },
+    {
+        degree: "Bachelor of Arts (Bangla)",
+        school: "University of Dhaka",
+        period: "2016-2020", // Assuming completion year
+        description: ""
     }
 ]
 
@@ -54,9 +64,10 @@ export const certifications: CertificationItem[] = [
         issuer: "Amazon Web Services",
         date: "2023"
     },
-    {
-        title: "Laravel Certified Developer",
-        issuer: "Laravel",
-        date: "2022"
-    }
+    // {
+    //     title: "Laravel Certified Developer",
+    //     issuer: "Laravel",
+    //     date: "2022"
+    // },
+
 ]
