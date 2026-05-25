@@ -12,25 +12,26 @@ interface NavbarProps {
 }
 
 export function Navbar({ isScrolled }: NavbarProps) {
-    const { theme, setTheme } = useTheme()
+    const { resolvedTheme, setTheme } = useTheme()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     const navItems = ['Home', 'Projects', 'Experience', 'Skills', 'Blog', 'Contact']
 
     const toggleTheme = () => {
-        setTheme(theme === 'dark' ? 'light' : 'dark')
+        setTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark')
     }
+
+    const inactiveLinkClass = 'text-foreground/80 hover:text-foreground'
 
     return (
         <nav className={cn(
             "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-            (isScrolled || isMenuOpen)
-                ? 'bg-background/80 backdrop-blur-xl border-b border-border shadow-sm'
-                : 'bg-transparent'
+            "bg-background/95 dark:bg-[#0b0f1a]/90 backdrop-blur-xl border-b border-border",
+            isScrolled || isMenuOpen ? 'shadow-md' : 'shadow-sm'
         )}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
-                    <Link to="/" className="text-xl font-bold cursor-pointer">
+                    <Link to="/" className="text-xl font-bold text-foreground cursor-pointer">
                         Helal Uddin
                     </Link>
 
@@ -42,7 +43,7 @@ export function Navbar({ isScrolled }: NavbarProps) {
                                 to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
                                 className={({ isActive }) => cn(
                                     "text-sm font-medium transition-colors relative py-1 hover:text-primary",
-                                    isActive ? "text-primary font-semibold" : "text-muted-foreground"
+                                    isActive ? "text-primary font-semibold" : inactiveLinkClass
                                 )}
                             >
                                 {({ isActive }) => (
@@ -59,9 +60,9 @@ export function Navbar({ isScrolled }: NavbarProps) {
                             variant="ghost"
                             size="icon"
                             onClick={toggleTheme}
-                            className="ml-2"
+                            className="ml-2 text-foreground"
                         >
-                            {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                            {resolvedTheme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                         </Button>
                     </div>
 
@@ -71,13 +72,15 @@ export function Navbar({ isScrolled }: NavbarProps) {
                             variant="ghost"
                             size="icon"
                             onClick={toggleTheme}
+                            className="text-foreground"
                         >
-                            {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+                            {resolvedTheme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                         </Button>
                         <Button
                             variant="ghost"
                             size="icon"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            className="text-foreground"
                         >
                             {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                         </Button>
@@ -98,7 +101,7 @@ export function Navbar({ isScrolled }: NavbarProps) {
                                     "block w-full text-left px-3 py-3 text-base font-medium rounded-md transition-colors",
                                     isActive
                                         ? 'bg-primary/10 text-primary'
-                                        : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                                        : 'text-foreground/80 hover:bg-muted hover:text-foreground'
                                 )}
                             >
                                 {item}

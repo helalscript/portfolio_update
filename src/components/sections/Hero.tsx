@@ -8,8 +8,8 @@ interface HeroProps {
 }
 
 export function Hero({ onNavigate }: HeroProps) {
-    const { theme } = useTheme()
-    const isDark = theme === 'dark'
+    const { resolvedTheme } = useTheme()
+    const isDark = resolvedTheme === 'dark'
 
     return (
         <section id="home" className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
