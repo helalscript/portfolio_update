@@ -14,6 +14,7 @@ import { useState, useEffect } from 'react'
 import './index.css'
 
 import { ScrollToTopButton } from '@/components/ui/ScrollToTopButton'
+import { PageBackground } from '@/components/ui/PageBackground'
 
 function AppWrapper() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -36,9 +37,10 @@ function AppWrapper() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground transition-colors duration-300 flex flex-col">
+    <div className="relative min-h-screen bg-background text-foreground transition-colors duration-300 flex flex-col">
+      <PageBackground />
       <Navbar isScrolled={isScrolled} activeSection={activeSection} onNavigate={scrollToSection} />
-      <div className="flex-grow pt-0">
+      <div className="relative z-10 flex-grow pt-0">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<ProjectsPage />} />

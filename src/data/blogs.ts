@@ -1,3 +1,5 @@
+import { laravelBrevoBlogContent } from './laravel-brevo-content'
+
 export interface BlogPost {
   id: string
   title: string
@@ -10,6 +12,17 @@ export interface BlogPost {
 }
 
 export const blogs: BlogPost[] = [
+  {
+    id: 'laravel-brevo-api-email',
+    title: 'Laravel-এ Brevo API দিয়ে Email পাঠানো — SMTP ছাড়াই',
+    excerpt:
+      'সার্ভারে SMTP restriction থাকলেও সমস্যা নেই। Brevo API Key দিয়ে HTTPS-এর মাধ্যমে Laravel থেকে সরাসরি email পাঠানো — প্রতিদিন ৩০০টি সম্পূর্ণ বিনামূল্যে।',
+    content: laravelBrevoBlogContent,
+    date: 'May 2025',
+    readTime: '12 min read',
+    tags: ['Laravel', 'PHP', 'Brevo', 'Email', 'API'],
+    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop'
+  },
   {
     id: 'laravel-performance-optimization',
     title: 'Advanced Laravel Performance Optimization Techniques',

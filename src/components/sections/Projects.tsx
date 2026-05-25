@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 export function Projects() {
     return (
-        <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/50 animate-fade-up">
+        <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-muted/40 dark:bg-card/20 border-y border-border/40 animate-fade-up">
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl sm:text-4xl font-bold mb-4">Featured Projects</h2>
