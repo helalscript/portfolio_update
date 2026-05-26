@@ -8,6 +8,7 @@ import { BlogCard } from '@/components/ui/blog-card'
 import { BlogPageShell, BlogPageWideSection } from '@/components/ui/BlogPageShell'
 import { useTheme } from '@/components/theme-provider'
 import { cn } from '@/lib/utils'
+import { BlogArticleBody } from '@/components/ui/BlogArticleBody'
 
 export function SingleBlog() {
     const { id } = useParams()
@@ -93,12 +94,9 @@ export function SingleBlog() {
                         </div>
                     )}
 
-                    <div
-                        className={cn(
-                            'max-w-none',
-                            isDark ? 'blog-prose' : 'article-prose'
-                        )}
-                        dangerouslySetInnerHTML={{ __html: blog.content }}
+                    <BlogArticleBody
+                        html={blog.content}
+                        className={cn('max-w-none', isDark ? 'blog-prose' : 'article-prose')}
                     />
 
                     <hr className="my-12 border-border" />

@@ -12,7 +12,10 @@ export function Hero({ onNavigate }: HeroProps) {
     const isDark = resolvedTheme === 'dark'
 
     return (
-        <section id="home" className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <section
+            id="home"
+            className="relative overflow-hidden min-h-[100dvh] flex flex-col justify-center pt-16 pb-16 px-4 sm:px-6 lg:px-8"
+        >
             {/* Linear Gradient Grid Background */}
             <div
                 className={`absolute inset-0 -z-10 h-full w-full bg-grid-pattern ${isDark ? 'bg-grid-custom-dark' : 'bg-grid-custom-light'}`}
