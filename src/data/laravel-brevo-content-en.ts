@@ -189,7 +189,7 @@ Route::get('/send-test-mail', function () {
   <h2>Watch the video tutorial</h2>
   <p>Watch the full live setup process in the video below.</p>
   <div class="video-embed">
-    <iframe src="https://www.youtube.com/embed/w96LIYeIJ8k?start=95" title="Laravel + Brevo API Email Setup" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/d9Ah0ucJ6zo" title="Laravel + Brevo API Email Setup" allowfullscreen></iframe>
   </div>
 
   <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-8 my-8">
