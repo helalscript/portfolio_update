@@ -1,4 +1,6 @@
-export const laravelBrevoBlogContent = `
+import { codeBlock } from '@/lib/blog-code-block'
+
+export const laravelBrevoBlogContentBn = `
 <div class="space-y-6">
   <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-6">
     <p><strong>কেন SMTP-র বদলে API Key?</strong> অনেক shared hosting বা cloud server-এ SMTP port (587, 465, 25) ব্লক থাকে security কারণে। Brevo-র API-based mailer সম্পূর্ণ HTTPS (port 443) দিয়ে কাজ করে — তাই কোনো port restriction ম্যাটার করে না। এছাড়া API key অনেক বেশি secure, কারণ password কোথাও যায় না। Brevo free plan-এ প্রতিদিন <strong>৩০০টি email</strong> সম্পূর্ণ বিনামূল্যে পাঠানো যায়।</p>
@@ -15,34 +17,31 @@ export const laravelBrevoBlogContent = `
 
   <hr class="border-border/50 my-10" />
 
-  <h2><span class="text-xs font-mono text-emerald-500 border border-emerald-500/25 bg-emerald-500/10 rounded px-2 py-0.5 mr-2">ধাপ ০১</span> Package Install</h2>
+  <h2><span class="step-badge">ধাপ ০১</span> Package Install</h2>
   <p>Brevo-র জন্য Symfony-র official mailer bridge ব্যবহার করা হয়। এই bridge-টি Brevo-র API-এর সাথে কথা বলে। সাথে <strong>symfony/http-client</strong> লাগবে কারণ API call করার জন্য এটা দরকার।</p>
-  <p class="text-sm text-muted-foreground mb-1"><strong>Terminal</strong> · bash</p>
-  <pre><code>composer require symfony/brevo-mailer symfony/http-client</code></pre>
+  ${codeBlock('Terminal', 'bash', 'composer require symfony/brevo-mailer symfony/http-client')}
   <div class="rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-4 my-4">
     <p><strong>Laravel version note:</strong> Laravel 10+ এ এই package গুলো সরাসরি কাজ করে। Laravel 9 হলে <code>symfony/mailer</code> version compatibility চেক করো।</p>
   </div>
 
-  <h2><span class="text-xs font-mono text-emerald-500 border border-emerald-500/25 bg-emerald-500/10 rounded px-2 py-0.5 mr-2">ধাপ ০২</span> .env ফাইল কনফিগার</h2>
+  <h2><span class="step-badge">ধাপ ০২</span> .env ফাইল কনফিগার</h2>
   <p>Brevo dashboard-এ গিয়ে <strong>SMTP &amp; API → API Keys</strong> থেকে একটি API key তৈরি করো। তারপর <code>.env</code> ফাইলে নিচের মতো সেট করো:</p>
-  <p class="text-sm text-muted-foreground mb-1"><strong>.env</strong></p>
-  <pre><code># Mail driver — brevo API transport ব্যবহার করবে
+  ${codeBlock('.env', 'env', `# Mail driver — brevo API transport ব্যবহার করবে
 MAIL_MAILER=brevo
 
-# Brevo dashboard &gt; SMTP &amp; API &gt; API Keys থেকে নাও
+# Brevo dashboard > SMTP & API > API Keys থেকে নাও
 BREVO_API_KEY=your_actual_api_key_here
 
 # যে address থেকে mail যাবে — Brevo-তে verified হতে হবে
 MAIL_FROM_ADDRESS=hello@yourdomain.com
-MAIL_FROM_NAME="Your Company Name"</code></pre>
+MAIL_FROM_NAME="Your Company Name"`)}
   <div class="rounded-lg border border-amber-500/20 bg-amber-500/5 p-4 my-4">
     <p><strong>গুরুত্বপূর্ণ:</strong> <code>MAIL_FROM_ADDRESS</code>-এ দেওয়া email টি Brevo-তে <strong>Sender হিসেবে verified</strong> থাকতে হবে। না হলে Brevo mail reject করবে। Dashboard &gt; Senders &amp; IP &gt; Senders থেকে verify করো।</p>
   </div>
 
-  <h2><span class="text-xs font-mono text-emerald-500 border border-emerald-500/25 bg-emerald-500/10 rounded px-2 py-0.5 mr-2">ধাপ ০৩</span> config/services.php</h2>
+  <h2><span class="step-badge">ধাপ ০৩</span> config/services.php</h2>
   <p>Laravel-কে জানাতে হবে Brevo-র config কোথায় আছে। <code>config/services.php</code> ফাইলের array-এ Brevo-র entry যোগ করো:</p>
-  <p class="text-sm text-muted-foreground mb-1"><strong>config/services.php</strong> · php</p>
-  <pre><code>return [
+  ${codeBlock('config/services.php', 'php', `return [
 
     // ... অন্যান্য services (mailgun, postmark ইত্যাদি) ...
 
@@ -51,12 +50,11 @@ MAIL_FROM_NAME="Your Company Name"</code></pre>
         'dsn' => 'brevo+api://' . env('BREVO_API_KEY') . '@default',
     ],
 
-];</code></pre>
+];`)}
 
-  <h2><span class="text-xs font-mono text-emerald-500 border border-emerald-500/25 bg-emerald-500/10 rounded px-2 py-0.5 mr-2">ধাপ ০৪</span> AppServiceProvider — Transport Register</h2>
+  <h2><span class="step-badge">ধাপ ০৪</span> AppServiceProvider — Transport Register</h2>
   <p>এটাই সবচেয়ে গুরুত্বপূর্ণ ধাপ। Laravel-এর mail system-এ <code>brevo</code> নামের একটি custom transport driver register করতে হবে। এটা <code>boot()</code> method-এ করা হয়:</p>
-  <p class="text-sm text-muted-foreground mb-1"><strong>app/Providers/AppServiceProvider.php</strong> · php</p>
-  <pre><code>namespace App\\Providers;
+  ${codeBlock('app/Providers/AppServiceProvider.php', 'php', `namespace App\\Providers;
 
 use Illuminate\\Support\\ServiceProvider;
 use Illuminate\\Support\\Facades\\Mail;
@@ -86,15 +84,14 @@ class AppServiceProvider extends ServiceProvider
             );
         });
     }
-}</code></pre>
+}`)}
   <div class="rounded-lg border border-blue-500/20 bg-blue-500/5 p-4 my-4">
     <p><strong>কীভাবে কাজ করে:</strong> <code>Mail::extend()</code> Laravel-এর mail manager-এ একটি নতুন driver যোগ করে। যখন <code>MAIL_MAILER=brevo</code> থাকে, Laravel এই callback call করে এবং Symfony-র <code>BrevoTransportFactory</code> একটি transport object তৈরি করে দেয় যা Brevo-র API-এর সাথে HTTPS-এ কথা বলে।</p>
   </div>
 
-  <h2><span class="text-xs font-mono text-emerald-500 border border-emerald-500/25 bg-emerald-500/10 rounded px-2 py-0.5 mr-2">ধাপ ০৫</span> config/mail.php তে Mailer যোগ</h2>
+  <h2><span class="step-badge">ধাপ ০৫</span> config/mail.php তে Mailer যোগ</h2>
   <p><code>config/mail.php</code> ফাইলের <code>mailers</code> array-এ <code>brevo</code> entry যোগ করো। এটা Laravel-কে বলে যে <strong>'brevo'</strong> নামের mailer কোন transport ব্যবহার করবে:</p>
-  <p class="text-sm text-muted-foreground mb-1"><strong>config/mail.php</strong> · php</p>
-  <pre><code>'mailers' => [
+  ${codeBlock('config/mail.php', 'php', `'mailers' => [
 
     'smtp' => [
         'transport' => 'smtp',
@@ -108,29 +105,26 @@ class AppServiceProvider extends ServiceProvider
 
     // ... অন্যান্য mailers ...
 
-],</code></pre>
+],`)}
 
-  <h2><span class="text-xs font-mono text-emerald-500 border border-emerald-500/25 bg-emerald-500/10 rounded px-2 py-0.5 mr-2">ধাপ ০৬</span> Test করো</h2>
+  <h2><span class="step-badge">ধাপ ০৬</span> Test করো</h2>
   <div class="rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-4 my-4">
     <p>Test করার আগে অবশ্যই <code>php artisan config:clear</code> চালাও! Cache থেকে পুরনো config লোড হলে নতুন settings কাজ করবে না।</p>
   </div>
 
   <h3>পদ্ধতি ক — Artisan Tinker দিয়ে (সবচেয়ে দ্রুত)</h3>
   <p>Terminal-এ Tinker খুলে সরাসরি mail পাঠিয়ে দেখো:</p>
-  <p class="text-sm text-muted-foreground mb-1"><strong>Terminal</strong> · bash</p>
-  <pre><code>php artisan tinker</code></pre>
-  <p class="text-sm text-muted-foreground mb-1"><strong>Tinker REPL</strong> · php</p>
-  <pre><code>use Illuminate\\Support\\Facades\\Mail;
+  ${codeBlock('Terminal', 'bash', 'php artisan tinker')}
+  ${codeBlock('Tinker REPL', 'php', `use Illuminate\\Support\\Facades\\Mail;
 
 Mail::raw('Hello from Brevo API! This is a test.', function ($message) {
     $message->to('tomar@email.com')
             ->subject('Laravel Brevo API Test');
-});</code></pre>
+});`)}
 
   <h3>পদ্ধতি খ — Web Route দিয়ে (ব্রাউজারে পরীক্ষা)</h3>
   <p><code>routes/web.php</code>-এ নিচের route যোগ করো, তারপর ব্রাউজারে <code>http://127.0.0.1:8000/send-test-mail</code> খোলো। Success হলে JSON response পাবে:</p>
-  <p class="text-sm text-muted-foreground mb-1"><strong>routes/web.php</strong> · php</p>
-  <pre><code>use Illuminate\\Support\\Facades\\Mail;
+  ${codeBlock('routes/web.php', 'php', `use Illuminate\\Support\\Facades\\Mail;
 use Illuminate\\Support\\Facades\\Route;
 
 Route::get('/send-test-mail', function () {
@@ -157,7 +151,7 @@ Route::get('/send-test-mail', function () {
             'error'  => $e->getMessage(),
         ], 500);
     }
-});</code></pre>
+});`)}
   <div class="rounded-lg border border-amber-500/20 bg-amber-500/5 p-4 my-4">
     <p><strong>Production-এ এই route রাখবে না।</strong> Test শেষে অবশ্যই route টি remove করো অথবা middleware দিয়ে protect করো।</p>
   </div>
@@ -197,27 +191,27 @@ Route::get('/send-test-mail', function () {
   <p class="text-xs font-mono uppercase tracking-wider text-red-500 border border-red-500/25 bg-red-500/10 rounded-full inline-block px-3 py-1 mb-3">YouTube Tutorial</p>
   <h2>ভিডিও টিউটোরিয়াল দেখো</h2>
   <p>পুরো setup প্রক্রিয়াটি live দেখতে চাইলে নিচের ভিডিওটি দেখো।</p>
-  <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;margin:24px 0;border:1px solid rgba(255,255,255,0.12)">
-    <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;border:0" src="https://www.youtube.com/embed/w96LIYeIJ8k?start=95" title="Laravel + Brevo API Email Setup" allowfullscreen></iframe>
+  <div class="video-embed">
+    <iframe src="https://www.youtube.com/embed/w96LIYeIJ8k?start=95" title="Laravel + Brevo API Email Setup" allowfullscreen></iframe>
   </div>
 
   <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-8 my-8">
     <h3 class="font-bold text-lg mb-3">সংক্ষেপে পুরো প্রক্রিয়া</h3>
     <p class="mb-4">মাত্র ৫টি ফাইল touch করলেই Laravel থেকে Brevo API দিয়ে email পাঠানো সম্পূর্ণ হয়ে যাবে। Config change-এর পর <strong>config:clear</strong> চালাতে ভুলো না।</p>
-    <p class="flex flex-wrap gap-2 items-center text-sm font-mono">
-      <span class="rounded border border-emerald-500/25 bg-emerald-500/10 text-emerald-500 px-2 py-1">composer require</span>
-      <span>→</span>
-      <span class="rounded border border-emerald-500/25 bg-emerald-500/10 text-emerald-500 px-2 py-1">.env set</span>
-      <span>→</span>
-      <span class="rounded border border-emerald-500/25 bg-emerald-500/10 text-emerald-500 px-2 py-1">services.php</span>
-      <span>→</span>
-      <span class="rounded border border-emerald-500/25 bg-emerald-500/10 text-emerald-500 px-2 py-1">AppServiceProvider</span>
-      <span>→</span>
-      <span class="rounded border border-emerald-500/25 bg-emerald-500/10 text-emerald-500 px-2 py-1">mail.php</span>
-      <span>→</span>
-      <span class="rounded border border-emerald-500/25 bg-emerald-500/10 text-emerald-500 px-2 py-1">config:clear</span>
-      <span>→</span>
-      <span class="rounded border border-emerald-500/25 bg-emerald-500/10 text-emerald-500 px-2 py-1">✅ done</span>
+    <p class="flow-steps">
+      <span class="flow-step">composer require</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">.env set</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">services.php</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">AppServiceProvider</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">mail.php</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">config:clear</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-step">✅ done</span>
     </p>
   </div>
 </div>

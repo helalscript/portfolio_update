@@ -1,4 +1,5 @@
 import { ThemeProvider } from '@/components/theme-provider'
+import { LanguageProvider } from '@/components/language-provider'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Navbar } from '@/components/sections/Navbar'
 import { Footer } from '@/components/sections/Footer'
@@ -61,9 +62,11 @@ function AppWrapper() {
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="portfolio-theme">
-      <Router>
-        <AppWrapper />
-      </Router>
+      <LanguageProvider defaultLanguage="en" storageKey="portfolio-language">
+        <Router>
+          <AppWrapper />
+        </Router>
+      </LanguageProvider>
     </ThemeProvider>
   )
 }

@@ -4,25 +4,29 @@ import { Calendar, Clock, Share2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { blogs } from '@/data/blogs'
+import { useLanguage } from '@/components/language-provider'
+import { useLocalizedBlog, useLocalizedBlogs } from '@/hooks/use-localized-blogs'
 import { BlogCard } from '@/components/ui/blog-card'
 import { BlogPageShell, BlogPageWideSection } from '@/components/ui/BlogPageShell'
 import { useTheme } from '@/components/theme-provider'
 import { cn } from '@/lib/utils'
+import { BlogArticleBody } from '@/components/ui/BlogArticleBody'
 
 export function SingleBlog() {
     const { id } = useParams()
     const navigate = useNavigate()
     const { resolvedTheme } = useTheme()
     const isDark = resolvedTheme === 'dark'
-    const blog = blogs.find(b => b.id === id)
-
-    const relatedBlogs = blogs
+    const { language } = useLanguage()
+    const rawBlog = blogs.find(b => b.id === id)
+    const blog = useLocalizedBlog(rawBlog)
+    const relatedBlogs = useLocalizedBlogs()
         .filter(b => b.id !== id)
         .slice(0, 3)
 
     useEffect(() => {
         window.scrollTo(0, 0)
-    }, [id])
+    }, [id, language])
 
     if (!blog) {
         return (
@@ -93,12 +97,9 @@ export function SingleBlog() {
                         </div>
                     )}
 
-                    <div
-                        className={cn(
-                            'max-w-none',
-                            isDark ? 'blog-prose' : 'article-prose'
-                        )}
-                        dangerouslySetInnerHTML={{ __html: blog.content }}
+                    <BlogArticleBody
+                        html={blog.content}
+                        className={cn('max-w-none', isDark ? 'blog-prose' : 'article-prose')}
                     />
 
                     <hr className="my-12 border-border" />
