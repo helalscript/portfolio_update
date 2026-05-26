@@ -1,11 +1,11 @@
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { blogs } from '@/data/blogs'
+import { useLocalizedBlogs } from '@/hooks/use-localized-blogs'
 import { Link } from 'react-router-dom'
 import { BlogCard } from '@/components/ui/blog-card'
 
 export function BlogSection() {
-    // First blog is featured, next 3 are grid
+    const blogs = useLocalizedBlogs()
     const featuredBlog = blogs[0]
     const gridBlogs = blogs.slice(1, 4)
 

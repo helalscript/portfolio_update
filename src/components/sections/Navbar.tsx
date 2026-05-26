@@ -1,5 +1,6 @@
 import { Moon, Sun, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { LanguageToggle } from '@/components/ui/LanguageToggle'
 import { useTheme } from '@/components/theme-provider'
 import { Link, NavLink } from 'react-router-dom'
 import { useState } from 'react'
@@ -56,11 +57,12 @@ export function Navbar({ isScrolled }: NavbarProps) {
                                 )}
                             </NavLink>
                         ))}
+                        <LanguageToggle className="ml-1" />
                         <Button
                             variant="ghost"
                             size="icon"
                             onClick={toggleTheme}
-                            className="ml-2 text-foreground"
+                            className="text-foreground"
                         >
                             {resolvedTheme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
                         </Button>
@@ -68,6 +70,7 @@ export function Navbar({ isScrolled }: NavbarProps) {
 
                     {/* Mobile Menu Toggle */}
                     <div className="flex md:hidden items-center gap-2">
+                        <LanguageToggle />
                         <Button
                             variant="ghost"
                             size="icon"

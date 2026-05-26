@@ -4,6 +4,8 @@ import { Calendar, Clock, Share2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { blogs } from '@/data/blogs'
+import { useLanguage } from '@/components/language-provider'
+import { useLocalizedBlog, useLocalizedBlogs } from '@/hooks/use-localized-blogs'
 import { BlogCard } from '@/components/ui/blog-card'
 import { BlogPageShell, BlogPageWideSection } from '@/components/ui/BlogPageShell'
 import { useTheme } from '@/components/theme-provider'
@@ -15,15 +17,16 @@ export function SingleBlog() {
     const navigate = useNavigate()
     const { resolvedTheme } = useTheme()
     const isDark = resolvedTheme === 'dark'
-    const blog = blogs.find(b => b.id === id)
-
-    const relatedBlogs = blogs
+    const { language } = useLanguage()
+    const rawBlog = blogs.find(b => b.id === id)
+    const blog = useLocalizedBlog(rawBlog)
+    const relatedBlogs = useLocalizedBlogs()
         .filter(b => b.id !== id)
         .slice(0, 3)
 
     useEffect(() => {
         window.scrollTo(0, 0)
-    }, [id])
+    }, [id, language])
 
     if (!blog) {
         return (

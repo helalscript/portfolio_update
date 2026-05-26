@@ -1,4 +1,12 @@
-import { laravelBrevoBlogContent } from './laravel-brevo-content'
+import { laravelBrevoBlogContentBn } from './laravel-brevo-content'
+import { laravelBrevoBlogContentEn } from './laravel-brevo-content-en'
+
+export interface BlogLocaleFields {
+  title: string
+  excerpt: string
+  content: string
+  readTime?: string
+}
 
 export interface BlogPost {
   id: string
@@ -9,19 +17,27 @@ export interface BlogPost {
   readTime: string
   tags: string[]
   image?: string
+  bn?: BlogLocaleFields
 }
 
 export const blogs: BlogPost[] = [
   {
     id: 'laravel-brevo-api-email',
-    title: 'Laravel-এ Brevo API দিয়ে Email পাঠানো — SMTP ছাড়াই',
+    title: 'Sending Email from Laravel with Brevo API — No SMTP Required',
     excerpt:
-      'সার্ভারে SMTP restriction থাকলেও সমস্যা নেই। Brevo API Key দিয়ে HTTPS-এর মাধ্যমে Laravel থেকে সরাসরি email পাঠানো — প্রতিদিন ৩০০টি সম্পূর্ণ বিনামূল্যে।',
-    content: laravelBrevoBlogContent,
+      'SMTP blocked on your server? No problem. Send email from Laravel over HTTPS with a Brevo API key — 300 emails per day free.',
+    content: laravelBrevoBlogContentEn,
     date: 'May 2025',
     readTime: '12 min read',
     tags: ['Laravel', 'PHP', 'Brevo', 'Email', 'API'],
-    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop',
+    bn: {
+      title: 'Laravel-এ Brevo API দিয়ে Email পাঠানো — SMTP ছাড়াই',
+      excerpt:
+        'সার্ভারে SMTP restriction থাকলেও সমস্যা নেই। Brevo API Key দিয়ে HTTPS-এর মাধ্যমে Laravel থেকে সরাসরি email পাঠানো — প্রতিদিন ৩০০টি সম্পূর্ণ বিনামূল্যে।',
+      content: laravelBrevoBlogContentBn,
+      readTime: '১২ মিনিট পড়া',
+    },
   },
   {
     id: 'laravel-performance-optimization',

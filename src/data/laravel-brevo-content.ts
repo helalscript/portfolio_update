@@ -1,6 +1,6 @@
 import { codeBlock } from '@/lib/blog-code-block'
 
-export const laravelBrevoBlogContent = `
+export const laravelBrevoBlogContentBn = `
 <div class="space-y-6">
   <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-6">
     <p><strong>কেন SMTP-র বদলে API Key?</strong> অনেক shared hosting বা cloud server-এ SMTP port (587, 465, 25) ব্লক থাকে security কারণে। Brevo-র API-based mailer সম্পূর্ণ HTTPS (port 443) দিয়ে কাজ করে — তাই কোনো port restriction ম্যাটার করে না। এছাড়া API key অনেক বেশি secure, কারণ password কোথাও যায় না। Brevo free plan-এ প্রতিদিন <strong>৩০০টি email</strong> সম্পূর্ণ বিনামূল্যে পাঠানো যায়।</p>

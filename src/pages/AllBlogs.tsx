@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Search, BookOpen, ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { blogs } from '@/data/blogs'
+import { useLocalizedBlogs } from '@/hooks/use-localized-blogs'
 import { BlogCard } from '@/components/ui/blog-card'
 import { BlogPageShell } from '@/components/ui/BlogPageShell'
 import { useTheme } from '@/components/theme-provider'
@@ -14,6 +14,7 @@ export function AllBlogs() {
     const [currentPage, setCurrentPage] = useState(1)
     const { resolvedTheme } = useTheme()
     const isDark = resolvedTheme === 'dark'
+    const blogs = useLocalizedBlogs()
 
     useEffect(() => {
         window.scrollTo(0, 0)
